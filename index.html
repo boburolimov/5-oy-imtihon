@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/output.css" />
+  </head>
+  <body class="bg-white text-black">
+    <div
+      class="fixed inset-0 bg-gray-100 flex items-center justify-center"
+      id="offlinePage"
+    >
+      <div class="flex flex-col max-w-96 w-full">
+        <h2 class="text-3xl mb-3 text-black">inernet bilan muammo bor</h2>
+        <p class="text-gray-700">
+          siz hozir offline holatdasiz. Saytdan foyldalanish uchun internetga
+          ulanig
+        </p>
+      </div>
+    </div>
+
+    <section class="pt-32 pb-10">
+      <div class="container mx-auto px-5">
+        <div class="flex flex-col items-center gap-5 pb-5">
+<nav class="bg-white border-b border-gray-300 fixed top-0 left-0 right-0 z-50 shadow-md">
+  <div
+    class="max-w-[1140px] w-full mx-auto flex flex-wrap items-center justify-between p-4 gap-6"
+  >
+    <h1
+      class="text-5xl font-extrabold uppercase text-black bg-gradient-to-r from-gray-800 via-black to-gray-600 bg-clip-text text-transparent animate-pulse drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]"
+    >
+      Cars
+    </h1>
+
+    <div
+      class="flex flex-1 md:order-2 items-center justify-end gap-4 flex-wrap"
+    >
+      <select
+        class="select select-primary w-full md:w-64 bg-white border border-gray-400 text-black"
+        id="filterTypeSelect"
+      >
+        <option disabled selected>
+          nima bo'yicha filter qilmoqchisiz
+        </option>
+        <option value="colorName">Rang</option>
+        <option value="category">Turkum</option>
+        <option value="year">Yil</option>
+        <option value="country">Davlat</option>
+        <option value="maxSpeed">Tezlik</option>
+      </select>
+
+      <select
+        class="select select-primary hidden w-full md:w-48 bg-white border border-gray-400 text-black"
+        id="filterValueSelect"
+      >
+        <option disabled selected>All</option>
+      </select>
+
+      <label
+        class="input flex-1 min-w-[150px] md:min-w-[220px] h-[40px] flex items-center bg-white border border-gray-400 text-black"
+      >
+        <svg
+          class="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input
+          type="search"
+          class="grow p-1 bg-white border-none text-black text-sm"
+          placeholder="Search"
+          id="searchInput"
+        />
+        <kbd class="kbd kbd-sm text-black">⌘</kbd>
+        <kbd class="kbd kbd-sm text-black">K</kbd>
+      </label>
+
+      
+    </div>
+  </div>
+</nav>
+
+
+
+
+          <div class="grid grid-cols-3 gap-5 w-full" id="container"></div>
+        </div>
+      </div>
+    </section>
+
+    <dialog id="editModal" class="modal">
+      <div class="modal-box bg-white border border-gray-300 text-black">
+        <h3 class="text-lg font-bold" id="editedElementTitle"></h3>
+        <p class="py-4">siz shu elementni tahrirlayapsiz</p>
+        <form id="editForm">
+          <input
+            type="text"
+            name="name"
+            placeholder="Mashina nomi"
+            class="input bg-white border border-gray-400 text-black"
+          />
+          <textarea
+            name="description"
+            class="textarea bg-white border border-gray-400 text-black"
+            placeholder="description"
+          ></textarea>
+          <button class="btn btn-active" type="submit">tasdiqlash</button>
+        </form>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <template id="cardTemplate">
+      <div
+        class="card bg-white border border-gray-300 card-md shadow-sm text-black"
+      >
+        <div class="card-body gap-0 leading-[2]">
+          <h2 class="card-title"></h2>
+          <p class="trim"></p>
+          <p class="generation"></p>
+          <p class="description"></p>
+          <p class="year"></p>
+          <p class="colorName"></p>
+          <p class="category"></p>
+          <p class="maxSpeed"></p>
+          <p class="acceleration"></p>
+          <p class="fuelType"></p>
+          <p class="country"></p>
+          <p class="id"></p>
+          <div class="justify-end card-actions"></div>
+          <div class="flex items-center justify-end gap-2">
+            <button
+              class="btn btn-error p-2 w-8 h-8 flex items-center justify-center js-delete"
+            >
+              <svg
+                class="pointer-events-none"
+                width="15"
+                height="15"
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+
+            <button
+              class="btn btn-warning p-2 w-8 h-8 flex items-center justify-center js-edit"
+            >
+              <svg
+                class="pointer-events-none"
+                width="15"
+                height="15"
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.8536 1.14645C11.6583 0.951184 11.3417 0.951184 11.1465 1.14645L3.71455 8.57836C3.62459 8.66832 3.55263 8.77461 3.50251 8.89155L2.04044 12.303C1.9599 12.491 2.00189 12.709 2.14646 12.8536C2.29103 12.9981 2.50905 13.0401 2.69697 12.9596L6.10847 11.4975C6.2254 11.4474 6.3317 11.3754 6.42166 11.2855L13.8536 3.85355C14.0488 3.65829 14.0488 3.34171 13.8536 3.14645L11.8536 1.14645Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+
+            <a
+              class="btn btn-info p-2 w-8 h-8 flex items-center justify-center js-info"
+              target="_blank"
+            >
+              <svg
+                class="pointer-events-none"
+                width="15"
+                height="15"
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.49991 0.876892C3.84222 0.876892 0.877075 3.84204 0.877075 7.49972C0.877075 11.1574 3.84222 14.1226 7.49991 14.1226C11.1576 14.1226 14.1227 11.1574 14.1227 7.49972C14.1227 3.84204 11.1576 0.876892 7.49991 0.876892ZM1.82707 7.49972C1.82707 4.36671 4.36689 1.82689 7.49991 1.82689C10.6329 1.82689 13.1727 4.36671 13.1727 7.49972C13.1727 10.6327 10.6329 13.1726 7.49991 13.1726C4.36689 13.1726 1.82707 10.6327 1.82707 7.49972ZM8.24992 4.49999C8.24992 4.9142 7.91413 5.24999 7.49992 5.24999C7.08571 5.24999 6.74992 4.9142 6.74992 4.49999C6.74992 4.08577 7.08571 3.74999 7.49992 3.74999C7.91413 3.74999 8.24992 4.08577 8.24992 4.49999ZM6.00003 5.99999H6.50003H7.50003C7.77618 5.99999 8.00003 6.22384 8.00003 6.49999V9.99999H8.50003H9.00003V11H8.50003H7.50003H6.50003H6.00003V9.99999H6.50003H7.00003V6.99999H6.50003H6.00003V5.99999Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <div class="flex justify-center">
+      <div class="join mb-20" id="pagination"></div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

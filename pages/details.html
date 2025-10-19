@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet">
+  </head>
+  <body class="flex items-center justify-center h-screen bg-gray-100">
+    <div id="loader" class="text-2xl font-bold">Yuklanmoqda...</div>
+
+    <div id="card" class="hidden card w-96 bg-base-100 shadow-xl">
+      <div class="card-body items-start text-left">
+        <h2 id="name" class="card-title"></h2>
+        <p id="description"></p>
+        <p id="trim"></p>
+        <p id="generation"></p>
+        <p id="year"></p>
+        <p id="colorName"></p>
+        <p id="category"></p>
+        <p id="maxSpeed"></p>
+        <p id="acceleration"></p>
+        <p id="fuelType"></p>
+        <p id="country"></p>
+        <p id="id"></p>
+        <div class="card-actions justify-end w-full mt-4">
+          <a href="../index.html" class="btn btn-primary w-full">Bosh sahifa</a>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="../js/pages/details.js"></script>
+  </body>
+</html>
