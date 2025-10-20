@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="./css/output.css" />
   </head>
   <body class="bg-white text-black">
+
+
+
+
+
+
     <div
       class="fixed inset-0 bg-gray-100 flex items-center justify-center"
       id="offlinePage"
@@ -23,76 +29,73 @@
     <section class="pt-32 pb-10">
       <div class="container mx-auto px-5">
         <div class="flex flex-col items-center gap-5 pb-5">
-<nav class="bg-white border-b border-gray-300 fixed top-0 left-0 right-0 z-50 shadow-md">
-  <div
-    class="max-w-[1140px] w-full mx-auto flex flex-wrap items-center justify-between p-4 gap-6"
-  >
-    <h1
-      class="text-5xl font-extrabold uppercase text-black bg-gradient-to-r from-gray-800 via-black to-gray-600 bg-clip-text text-transparent animate-pulse drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]"
-    >
-      Cars
-    </h1>
-
-    <div
-      class="flex flex-1 md:order-2 items-center justify-end gap-4 flex-wrap"
-    >
-      <select
-        class="select select-primary w-full md:w-64 bg-white border border-gray-400 text-black"
-        id="filterTypeSelect"
-      >
-        <option disabled selected>
-          nima bo'yicha filter qilmoqchisiz
-        </option>
-        <option value="colorName">Rang</option>
-        <option value="category">Turkum</option>
-        <option value="year">Yil</option>
-        <option value="country">Davlat</option>
-        <option value="maxSpeed">Tezlik</option>
-      </select>
-
-      <select
-        class="select select-primary hidden w-full md:w-48 bg-white border border-gray-400 text-black"
-        id="filterValueSelect"
-      >
-        <option disabled selected>All</option>
-      </select>
-
-      <label
-        class="input flex-1 min-w-[150px] md:min-w-[220px] h-[40px] flex items-center bg-white border border-gray-400 text-black"
-      >
-        <svg
-          class="h-[1em] opacity-50"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <g
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="2.5"
-            fill="none"
-            stroke="currentColor"
+          <nav
+            class="bg-white border-b border-gray-300 fixed top-0 left-0 right-0 z-50 shadow-md"
           >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input
-          type="search"
-          class="grow p-1 bg-white border-none text-black text-sm"
-          placeholder="Search"
-          id="searchInput"
-        />
-        <kbd class="kbd kbd-sm text-black">⌘</kbd>
-        <kbd class="kbd kbd-sm text-black">K</kbd>
-      </label>
+            <div
+              class="max-w-[1140px] w-full mx-auto flex flex-wrap items-center justify-between p-4 gap-6"
+            >
+              <h1
+                class="text-5xl font-extrabold uppercase text-black bg-gradient-to-r from-gray-800 via-black to-gray-600 bg-clip-text text-transparent animate-pulse drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]"
+              >
+                Cars
+              </h1>
 
-      
-    </div>
-  </div>
-</nav>
+              <div
+                class="flex flex-1 md:order-2 items-center justify-end gap-4 flex-wrap"
+              >
+                <select
+                  class="select select-primary w-full md:w-64 bg-white border border-gray-400 text-black"
+                  id="filterTypeSelect"
+                >
+                  <option disabled selected>
+                    nima bo'yicha filter qilmoqchisiz
+                  </option>
+                  <option value="colorName">Rang</option>
+                  <option value="category">Turkum</option>
+                  <option value="year">Yil</option>
+                  <option value="country">Davlat</option>
+                  <option value="maxSpeed">Tezlik</option>
+                </select>
 
+                <select
+                  class="select select-primary hidden w-full md:w-48 bg-white border border-gray-400 text-black"
+                  id="filterValueSelect"
+                >
+                  <option disabled selected>All</option>
+                </select>
 
-
+                <label
+                  class="input flex-1 min-w-[150px] md:min-w-[220px] h-[40px] flex items-center bg-white border border-gray-400 text-black"
+                >
+                  <svg
+                    class="h-[1em] opacity-50"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      stroke-linejoin="round"
+                      stroke-linecap="round"
+                      stroke-width="2.5"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                  </svg>
+                  <input
+                    type="search"
+                    class="grow p-1 bg-white border-none text-black text-sm"
+                    placeholder="Search"
+                    id="searchInput"
+                  />
+                  <kbd class="kbd kbd-sm text-black">⌘</kbd>
+                  <kbd class="kbd kbd-sm text-black">K</kbd>
+                </label>
+              </div>
+            </div>
+          </nav>
 
           <div class="grid grid-cols-3 gap-5 w-full" id="container"></div>
         </div>
@@ -100,29 +103,426 @@
     </section>
 
     <dialog id="editModal" class="modal">
-      <div class="modal-box bg-white border border-gray-300 text-black">
-        <h3 class="text-lg font-bold" id="editedElementTitle"></h3>
-        <p class="py-4">siz shu elementni tahrirlayapsiz</p>
-        <form id="editForm">
-          <input
-            type="text"
-            name="name"
-            placeholder="Mashina nomi"
-            class="input bg-white border border-gray-400 text-black"
-          />
-          <textarea
-            name="description"
-            class="textarea bg-white border border-gray-400 text-black"
-            placeholder="description"
-          ></textarea>
-          <button class="btn btn-active" type="submit">tasdiqlash</button>
-        </form>
-        <div class="modal-action">
-          <form method="dialog">
-            <button class="btn">Close</button>
+      <div
+        class="modal-box relative bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-700 shadow-2xl rounded-2xl max-w-4xl max-h-[90vh] p-0 overflow-y-auto"
+      >
+        <div
+          class="h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"
+        ></div>
+
+        <div class="p-8">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="relative">
+              <div
+                class="absolute inset-0 bg-blue-500/20 rounded-full blur-lg"
+              ></div>
+              <div
+                class="relative w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-7 w-7 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+              Mashina ma'lumotlarini tahrirlash
+            </h3>
+          </div>
+
+          <form id="editForm" class="flex flex-col gap-6">
+            <div class="grid grid-cols-6 gap-4">
+              <div class="col-span-3">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Mashina nomi
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Toyota Camry"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-3">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Tavsif
+                </label>
+                <input
+                  type="text"
+                  name="description"
+                  placeholder="Qisqacha tavsif"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Trim
+                </label>
+                <input
+                  type="text"
+                  name="trim"
+                  placeholder="Sport"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Avlod
+                </label>
+                <input
+                  type="text"
+                  name="generation"
+                  placeholder="8-avlod"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Yil
+                </label>
+                <input
+                  type="number"
+                  name="year"
+                  placeholder="2024"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Rang
+                </label>
+                <input
+                  type="text"
+                  name="colorName"
+                  placeholder="Qora"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Kategoriya
+                </label>
+                <input
+                  type="text"
+                  name="category"
+                  placeholder="Sedan"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Mamlakat
+                </label>
+                <input
+                  type="text"
+                  name="country"
+                  placeholder="Yaponiya"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Maks. tezlik
+                </label>
+                <input
+                  type="text"
+                  name="maxSpeed"
+                  placeholder="250"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Tezlanish
+                </label>
+                <input
+                  type="text"
+                  name="acceleration"
+                  placeholder="6.5s"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label
+                  class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Yonilg'i
+                </label>
+                <input
+                  type="text"
+                  name="fuelType"
+                  placeholder="Benzin"
+                  class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none transition-all"
+                />
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <button
+                type="button"
+                id="closeEditModal"
+                class="flex-1 px-6 py-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 hover:scale-105 hover:shadow-md"
+              >
+                Yopish
+              </button>
+              <button
+                type="submit"
+                class="flex-1 px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Saqlash
+              </button>
+            </div>
           </form>
         </div>
+
+        <div
+          class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"
+        ></div>
+        <div
+          class="absolute -bottom-10 -left-10 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl pointer-events-none"
+        ></div>
       </div>
+
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+
+    <!-- Delete modal -->
+    <dialog id="deleteModal" class="modal">
+      <div
+        class="modal-box relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-2xl rounded-2xl max-w-md p-0 overflow-hidden"
+      >
+        <div
+          class="h-1.5 bg-gradient-to-r from-red-500 via-pink-500 to-red-500"
+        ></div>
+
+        <div class="p-8">
+          <div class="flex justify-center mb-6">
+            <div class="relative">
+              <div
+                class="absolute inset-0 bg-red-500/20 rounded-full blur-xl"
+              ></div>
+              <div
+                class="relative w-20 h-20 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center shadow-lg"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-10 w-10 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+              Ishonchingiz komilmi?
+            </h3>
+            <p
+              class="text-gray-600 dark:text-gray-300 text-base leading-relaxed"
+            >
+              Siz ushbu elementni
+              <span class="font-semibold text-red-600 dark:text-red-400"
+                >butunlay o'chirmoqchisiz</span
+              >. Bu amalni ortga qaytarib bo'lmaydi!
+            </p>
+          </div>
+
+          <div class="flex gap-3">
+            <button
+              type="button"
+              id="cancelDelete"
+              class="flex-1 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 hover:scale-105 hover:shadow-md"
+            >
+              <span class="flex items-center justify-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+                Bekor qilish
+              </span>
+            </button>
+
+            <button
+              type="button"
+              id="confirmDelete"
+              class="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              <span class="flex items-center justify-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+                O'chirish
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="absolute -top-10 -right-10 w-32 h-32 bg-red-500/10 rounded-full blur-2xl pointer-events-none"
+        ></div>
+        <div
+          class="absolute -bottom-10 -left-10 w-24 h-24 bg-pink-500/10 rounded-full blur-xl pointer-events-none"
+        ></div>
+      </div>
+
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+
+    <!-- Auth Modal -->
+    <dialog id="authModal" class="modal">
+      <div
+        class="modal-box relative bg-white dark:bg-gray-800 border border-blue-200 dark:border-blue-800 shadow-2xl rounded-2xl max-w-md p-0 overflow-hidden"
+      >
+        <div
+          class="h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+        ></div>
+
+        <div class="p-8">
+          <div class="flex justify-center mb-6">
+            <div class="relative">
+              <div
+                class="absolute inset-0 bg-blue-500/20 rounded-full blur-xl"
+              ></div>
+              <div
+                class="relative w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-10 w-10 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+              Diqqat!
+            </h2>
+            <p
+              class="text-gray-600 dark:text-gray-300 text-base leading-relaxed"
+            >
+              Bu amalni bajarish uchun
+              <span class="font-semibold text-blue-600 dark:text-blue-400"
+                >ro'yxatdan o'tishingiz</span
+              >
+              kerak.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button
+              type="button"
+              id="authCancel"
+              class="flex-1 px-6 py-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200 hover:scale-105 hover:shadow-md text-center whitespace-nowrap text-base"
+            >
+              Bekor qilish
+            </button>
+
+            <button
+              type="button"
+              id="authLogin"
+              class="flex-1 px-6 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl text-center whitespace-nowrap text-base"
+            >
+              Ro'yxatdan o'tish
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"
+        ></div>
+        <div
+          class="absolute -bottom-10 -left-10 w-24 h-24 bg-purple-500/10 rounded-full blur-xl pointer-events-none"
+        ></div>
+      </div>
+
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
     </dialog>
 
     <template id="cardTemplate">

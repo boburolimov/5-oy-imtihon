@@ -50,6 +50,7 @@ export async function editElement(editedData) {
       body: JSON.stringify(editedData),
     });
     const res = await req.json();
+    
     return res;
   } catch {
     throw new Error("Ma'lumotn tahrirlashda Xatolik  boldi");

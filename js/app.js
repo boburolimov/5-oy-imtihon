@@ -7,6 +7,14 @@ import { pagination, ui } from "./ui.js";
 const limit = 12;
 let skip = 0;
 
+const elAuthModal = document.getElementById("authModal");
+const elAuthCancel = document.getElementById("authCancel");
+const elAuthLogin = document.getElementById("authLogin");
+
+const elDeleteModal = document.getElementById("deleteModal");
+const elCancelDelete = document.getElementById("cancelDelete");
+const elConfirmDelete = document.getElementById("confirmDelete");
+
 const elEditForm = document.getElementById("editForm");
 
 const elEditModal = document.getElementById("editModal");
@@ -40,7 +48,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   getAll(`?limit=${limit}&skip=${skip}`)
     .then((res) => {
-      
       backendData = res;
       pagination(backendData.total, backendData.limit, backendData.skip);
       changeLocalData(backendData.data);
@@ -174,31 +181,76 @@ elContainer.addEventListener("click", (evt) => {
       const foundElement = localData.find((el) => el.id == target.id);
       elEditForm.name.value = foundElement.name;
       elEditForm.description.value = foundElement.description;
+      elEditForm.trim.value = foundElement.trim;
+      elEditForm.generation.value = foundElement.generation;
+      elEditForm.year.value = foundElement.year;
+      elEditForm.colorName.value = foundElement.colorName;
+      elEditForm.category.value = foundElement.category;
+      elEditForm.maxSpeed.value = foundElement.maxSpeed;
+      elEditForm.acceleration.value = foundElement.acceleration;
+      elEditForm.fuelType.value = foundElement.fuelType;
+      elEditForm.country.value = foundElement.country;
     } else {
-      alert("royhatdan otishingiz kerak");
-      window.location.href = "/pages/login.html";
+      elAuthModal.showModal();
+      elAuthCancel.addEventListener("click", () => {
+        elAuthModal.close();
+      });
+      elAuthLogin.addEventListener("click", () => {
+        window.location.href = "/pages/login.html";
+      });
     }
   }
 
   //delete
 
-  if (evt.target.classList.contains("js-delete")) {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("ochirish uchun royhatdan otishingiz kerak");
-      window.location.href = "/pages/login.html";
-      return;
-    }
-    if (confirm("rostan ham ochirmoqchimisz")) {
-      getById2(evt.target.id)
-        .then((id) => {
-          deleteElementLocal(id);
-        })
-        .catch(() => {
-          console.log("ochirishda hato");
+  let deleteId = null;
+
+  elContainer.addEventListener("click", (evt) => {
+    const target = evt.target;
+
+    if (target.classList.contains("js-delete")) {
+      const token = localStorage.getItem("token");
+
+      if (!token || !checkAuth()) {
+        elAuthCancel.addEventListener("click", () => {
+          elAuthModal.close();
         });
+
+        elAuthLogin.addEventListener("click", () => {
+          window.location.href = "/pages/login.html";
+        });
+
+        elAuthModal.showModal();
+        return;
+      }
+
+      deleteId = target.id;
+      elDeleteModal.showModal();
     }
-  }
+  });
+
+  elCancelDelete.addEventListener("click", () => {
+    elDeleteModal.close();
+    deleteId = null;
+  });
+
+  elConfirmDelete.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (!deleteId) return;
+
+    getById2(deleteId)
+      .then((id) => {
+        deleteElementLocal(id);
+      })
+      .catch(() => {
+        console.log("Ochirishda xato yuz berdi");
+      })
+      .finally(() => {
+        elDeleteModal.close();
+        deleteId = null;
+      });
+  });
 });
 
 elEditForm.addEventListener("submit", (evt) => {
@@ -227,14 +279,13 @@ elEditForm.addEventListener("submit", (evt) => {
 const elPagination = document.getElementById("pagination");
 elPagination.addEventListener("click", (evt) => {
   if (evt.target.classList.contains("js-page")) {
-
-    skip = evt.target.dataset.skip
+    skip = evt.target.dataset.skip;
 
     getAll(`?limit=${limit}&skip=${skip}`)
       .then((res) => {
-        backendData.res
-        elContainer.innerHTML = ""
-        ui(res.data)
+        backendData.res;
+        elContainer.innerHTML = "";
+        ui(res.data);
         pagination(res.total, res.limit, res.skip);
       })
       .catch((error) => {
@@ -248,3 +299,11 @@ elPagination.addEventListener("click", (evt) => {
       });
   }
 });
+
+const elCloseEditModal = document.getElementById("closeEditModal");
+
+elCloseEditModal.addEventListener("click", () => {
+  elEditModal.close();
+});
+
+
