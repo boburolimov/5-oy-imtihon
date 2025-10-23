@@ -81,6 +81,7 @@ window.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => {
       alert(error.message);
+        hideSkeleton();
       elContainer.innerHTML = "";
       elContainer.innerHTML = `
         <div class="col-span-3 text-center mt-20 text-red-500">
