@@ -5,14 +5,13 @@ import { getAll, getById2, editElement, addElement } from "./request.js";
 
 import { pagination, ui } from "./ui.js";
 
-const channel1 = new BroadcastChannel("channel_1")
+const channel1 = new BroadcastChannel("channel_1");
 
 channel1.onmessage = (evt) => {
-  if(evt.data.action === "redirect") {
-    window.location.href = evt.data.address
+  if (evt.data.action === "redirect") {
+    window.location.href = evt.data.address;
   }
-  
-}
+};
 
 const limit = 12;
 let skip = 0;
@@ -39,9 +38,9 @@ const elCloseEditModal = document.getElementById("closeEditModal");
 const eldark = document.getElementById("dark");
 const sunIcon = document.getElementById("sunIcon");
 const moonIcon = document.getElementById("moonIcon");
-const searchInput = document.getElementById('searchInput');
-const container = document.getElementById('container');
-const footer = document.querySelector('footer');
+const searchInput = document.getElementById("searchInput");
+const container = document.getElementById("container");
+const footer = document.querySelector("footer");
 
 let backendData = null;
 let worker = new Worker("./worker.js");
@@ -50,13 +49,10 @@ let filterKey = null;
 let filterValue = null;
 let editedElementId = null;
 
-function warning () {
-  window.location.href = "/pages/the.html"
-  channel1.postMessage({action: "redirect", address: "/pages/the.html"})
+function warning() {
+  window.location.href = "/pages/the.html";
+  channel1.postMessage({ action: "redirect", address: "/pages/the.html" });
 }
-
-
-
 
 window.addEventListener("DOMContentLoaded", () => {
   if (window.navigator.onLine === false) {
@@ -64,6 +60,8 @@ window.addEventListener("DOMContentLoaded", () => {
   } else {
     elOfflinePage.classList.add("hidden");
   }
+
+  showSkeleton();
 
   elContainer.innerHTML = `
     <div class="col-span-3 flex flex-col items-center justify-center mt-20 gap-3">
@@ -77,6 +75,7 @@ window.addEventListener("DOMContentLoaded", () => {
       backendData = res;
       pagination(backendData.total, backendData.limit, backendData.skip);
       changeLocalData(backendData.data);
+      hideSkeleton();
       elContainer.innerHTML = "";
       ui(backendData.data);
     })
@@ -169,7 +168,8 @@ worker.addEventListener("message", (evt) => {
     } else {
       const eltext = document.createElement("h1");
       eltext.textContent = "Afsuski bunday mashina yoq";
-  eltext.className = "text-center text-[50px] col-span-3 mt-[100px] text-gray-900 dark:text-white";
+      eltext.className =
+        "text-center text-[50px] col-span-3 mt-[100px] text-gray-900 dark:text-white";
 
       const img = document.createElement("img");
       img.src = "img/no-data.png";
@@ -282,21 +282,31 @@ elContainer.addEventListener("click", (evt) => {
 
 elEditForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
+
+  const submitBtn = elEditForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Saqlanmoqda...";
+
   const formData = new FormData(elEditForm);
   const result = {};
   formData.forEach((value, key) => {
     result[key] = value;
   });
+
   if (editedElementId) {
     result.id = editedElementId;
     editElement(result)
       .then((res) => {
         editElementLocal(res);
       })
-      .catch(() => {})
+      .catch((err) => {
+        console.log("Editda xato:", err);
+      })
       .finally(() => {
         editedElementId = null;
         elEditModal.close();
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Saqlash";
       });
   }
 });
@@ -304,25 +314,34 @@ elEditForm.addEventListener("submit", (evt) => {
 //pagination
 
 const elPagination = document.getElementById("pagination");
+
 elPagination.addEventListener("click", (evt) => {
   if (evt.target.classList.contains("js-page")) {
-    skip = evt.target.dataset.skip;
+    skip = Number(evt.target.dataset.skip);
+
+    elContainer.innerHTML = `
+      <div class="col-span-3 flex flex-col items-center justify-center mt-20 gap-3">
+        <div class="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-lg text-gray-600 dark:text-gray-300">Yuklanmoqda...</p>
+      </div>
+    `;
 
     getAll(`?limit=${limit}&skip=${skip}`)
       .then((res) => {
         backendData = res;
+
         elContainer.innerHTML = "";
         ui(res.data);
+
         pagination(res.total, res.limit, res.skip);
       })
       .catch((error) => {
         alert(error.message);
-        elContainer.innerHTML = "";
         elContainer.innerHTML = `
-        <div class="col-span-3 text-center mt-20 text-red-500">
-          malumot topilmadi
-        </div>
-      `;
+          <div class="col-span-3 text-center mt-20 text-red-500">
+            Ma'lumot topilmadi
+          </div>
+        `;
       });
   }
 });
@@ -430,27 +449,61 @@ eldark.addEventListener("click", () => {
   localStorage.setItem("theme", dark ? "dark" : "light");
 });
 
+window.addEventListener("storage", (event) => {
+  if (event.key === "theme") {
+    const dark = event.newValue === "dark";
+    document.documentElement.classList.toggle("dark", dark);
 
+    sunIcon.classList.toggle("hidden", !dark);
+    moonIcon.classList.toggle("hidden", dark);
 
-searchInput.addEventListener('input', () => {
+    sunIcon.style.opacity = dark ? "1" : "0";
+    sunIcon.style.transform = dark ? "scale(1)" : "scale(0.75)";
+    moonIcon.style.opacity = dark ? "0" : "1";
+    moonIcon.style.transform = dark ? "scale(0.75)" : "scale(1)";
+  }
+});
+
+searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase();
   let hasResults = false;
 
-  const cards = container.querySelectorAll('.card');
-  cards.forEach(card => {
+  const cards = container.querySelectorAll(".card");
+  cards.forEach((card) => {
     const text = card.textContent.toLowerCase();
     if (text.includes(query)) {
-      card.style.display = '';
+      card.style.display = "";
       hasResults = true;
     } else {
-      card.style.display = 'none';
+      card.style.display = "none";
     }
   });
 
   if (!hasResults) {
-    footer.style.display = 'none';
+    footer.style.display = "none";
   } else {
-    footer.style.display = '';
+    footer.style.display = "";
   }
 });
 
+function showSkeleton(count = 9) {
+  const skeletonContainer = document.getElementById("skeleton");
+  const skeletonTemplate = document.getElementById("skeletonTemplate").content;
+  const elContainer = document.getElementById("container");
+
+  elContainer.classList.add("hidden");
+
+  skeletonContainer.innerHTML = "";
+  skeletonContainer.classList.remove("hidden");
+
+  for (let i = 0; i < count; i++) {
+    skeletonContainer.appendChild(skeletonTemplate.cloneNode(true));
+  }
+}
+
+function hideSkeleton() {
+  const skeletonContainer = document.getElementById("skeleton");
+  const elContainer = document.getElementById("container");
+  skeletonContainer.classList.add("hidden");
+  elContainer.classList.remove("hidden");
+}

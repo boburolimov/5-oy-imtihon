@@ -66,14 +66,17 @@ export function pagination(total, limit, skip) {
     elPagination.appendChild(button);
   }
 
-  if (remained > 0) {
-    const button = document.createElement("button");
-    button.classList.add("join-item", "btn", "js-page");
-    if(activePage === pageCount + 1) {
-       button.classList.add("btn-avtive");
-    }
-    button.innerText = pageCount + 1;
-    elPagination.appendChild(button);
-    button.dataset.skip = pageCount *  limit
+if (remained > 0) {
+  const button = document.createElement("button");
+  button.classList.add("join-item", "btn", "js-page");
+
+  if (activePage === pageCount + 1) {
+    button.classList.add("btn-active"); 
   }
+
+  button.innerText = pageCount + 1;
+  button.dataset.skip = pageCount * limit;
+  elPagination.appendChild(button);
+}
+
 }
