@@ -27,7 +27,7 @@ elForm.addEventListener("submit", (evt) => {
   login(result)
     .then((res) => {
       localStorage.setItem("token", res.access_token);
-      window.location.href = "../index.html";
+      window.location.href = "../the.html";
     })
     .catch(() => {})
     .finally(() => {});

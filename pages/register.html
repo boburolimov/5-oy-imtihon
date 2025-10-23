@@ -8,157 +8,144 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
   <body
-    class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900"
+    class="flex items-center justify-center min-h-screen"
   >
-    <fieldset
-      class="fieldset bg-white dark:bg-gray-800 border-base-300 rounded-2xl w-[420px] border p-8 shadow-xl"
-    >
-      <legend
-        class="fieldset-legend text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 text-center"
+
+      <div class="absolute inset-0 -z-10 overflow-hidden">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        class="w-full h-full object-cover"
       >
-        Ro'yxatdan O'tish
-      </legend>
+        <source src="./vidio/m.mp4" type="video/mp4" />
+        Sizning brauzeringiz video elementini qollab-quvvatlamaydi.
+      </video>
+      <div class="absolute inset-0 bg-black/40"></div>
+    </div>
+<fieldset class="fieldset bg-gray-800 dark:bg-gray-800 border-base-300 rounded-2xl w-[420px] border p-8 shadow-xl">
+  <legend class="fieldset-legend text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 text-center">
+    Ro'yxatdan O'tish
+  </legend>
 
+  <div class="space-y-4">
+    <!-- Username -->
+    <div>
+      <label for="username" class="mb-2 block text-base font-semibold text-gray-200 dark:text-gray-100">
+        Username
+      </label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        placeholder="Foydalanuvchi nomi"
+        required
+        autocomplete="username"
+        class="border-2 p-3 rounded-xl w-full bg-gray-700 dark:bg-indigo-700 text-gray-100 placeholder-gray-300 dark:placeholder-gray-400 border-gray-600 dark:border-gray-600 shadow-md focus:scale-105 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition duration-300 ease-in-out"
+      />
+    </div>
 
+    <!-- Email -->
+    <div>
+      <label for="email" class="mb-2 block text-base font-semibold text-gray-200 dark:text-gray-100">
+        Email
+      </label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="example@gmail.com"
+        required
+        autocomplete="email"
+        class="border-2 p-3 rounded-xl w-full bg-gray-700 dark:bg-indigo-700 text-gray-100 placeholder-gray-300 dark:placeholder-gray-400 border-gray-600 dark:border-gray-600 shadow-md focus:scale-105 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition duration-300 ease-in-out"
+      />
+    </div>
 
+    <!-- Password -->
+    <div>
+      <label for="password" class="mb-2 block text-base font-semibold text-gray-200 dark:text-gray-100">
+        Parol
+      </label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        placeholder="Kamida 8 ta belgi"
+        required
+        autocomplete="new-password"
+        class="border-2 p-3 rounded-xl w-full bg-gray-700 dark:bg-indigo-700 text-gray-100 placeholder-gray-300 dark:placeholder-gray-400 border-gray-600 dark:border-gray-600 shadow-md focus:scale-105 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition duration-300 ease-in-out"
+      />
+    </div>
 
+    <!-- Confirm Password -->
+    <div>
+      <label for="confirmPassword" class="mb-2 block text-base font-semibold text-gray-200 dark:text-gray-100">
+        Parolni Tasdiqlang
+      </label>
+      <input
+        id="confirmPassword"
+        name="confirmPassword"
+        type="password"
+        placeholder="Parolni qayta kiriting"
+        required
+        autocomplete="new-password"
+        class="border-2 p-3 rounded-xl w-full bg-gray-700 dark:bg-indigo-700 text-gray-100 placeholder-gray-300 dark:placeholder-gray-400 border-gray-600 dark:border-gray-600 shadow-md focus:scale-105 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition duration-300 ease-in-out"
+      />
+    </div>
+  </div>
 
-        <div>
-          <label
-            for="username"
-            class="mb-2 block text-base font-semibold text-gray-700 dark:text-gray-300"
-            >Username</label
-          >
-          <input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="Foydalanuvchi nomi"
-            required
-            autocomplete="username"
-            class="border-2 p-3 dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-600 shadow-md placeholder:text-sm focus:scale-105 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 ease-in-out duration-300 border-gray-300 rounded-xl w-full"
-          />
-        </div>
-
-
-                <div>
-          <label
-            for="email"
-            class="mb-2 block text-base font-semibold text-gray-700 dark:text-gray-300"
-            >Email</label
-          >
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="example@gmail.com"
-            required
-            autocomplete="email"
-            inputmode="email"
-            class="border-2 p-3 dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-600 shadow-md placeholder:text-sm focus:scale-105 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 ease-in-out duration-300 border-gray-300 rounded-xl w-full"
-          />
-        </div>
-
-
-        <div>
-          <label
-            for="password"
-            class="mb-2 block text-base font-semibold text-gray-700 dark:text-gray-300"
-            >Parol</label
-          >
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Kamida 8 ta belgi"
-            required
-            autocomplete="new-password"
-            class="border-2 p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-600 placeholder:text-sm focus:scale-105 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 ease-in-out duration-300 border-gray-300 rounded-xl w-full"
-          />
-        </div>
-
-        <div>
-          <label
-            for="confirmPassword"
-            class="mb-2 block text-base font-semibold text-gray-700 dark:text-gray-300"
-            >Parolni Tasdiqlang</label
-          >
-          <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            placeholder="Parolni qayta kiriting"
-            required
-            autocomplete="new-password"
-            class="border-2 p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-600 placeholder:text-sm focus:scale-105 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 ease-in-out duration-300 border-gray-300 rounded-xl w-full"
-          />
-        </div>
-
-        <a
-          href="../index.html"
-          class="relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white rounded-xl w-full py-3 mt-6 font-bold shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group flex items-center justify-center"
+  <!-- Buttons -->
+  <div class="mt-6 space-y-4">
+    <a
+      href="../index.html"
+      class="relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white rounded-xl w-full py-3 font-bold shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group flex items-center justify-center"
+    >
+      <span class="relative z-10 flex items-center justify-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 group-hover:rotate-12 transition-transform duration-300"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
-          <span class="relative z-10 flex items-center justify-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 group-hover:rotate-12 transition-transform duration-300"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            Ro'yxatdan O'tish
-          </span>
-          <div
-            class="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          ></div>
-        </a>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Ro'yxatdan O'tish
+      </span>
+      <div class="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    </a>
 
-        <div class="relative py-5">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300"></div>
-          </div>
-        </div>
-
-        <div class="text-center">
-          <p class="text-gray-600 dark:text-gray-400 text-sm mb-3">
-            Akkauntingiz bormi?
-          </p>
-
-          <!-- ✅ TO‘G‘RILANGAN LOGINGA O‘TISH LINKI -->
-          <a
-            href="./login.html"
-            class="relative overflow-hidden bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500 text-white rounded-xl w-full py-3 font-bold shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group flex items-center justify-center"
-          >
-            <span class="relative z-10 flex items-center justify-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                />
-              </svg>
-              Tizimga Kirish
-            </span>
-            <div
-              class="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            ></div>
-          </a>
-        </div>
+    <div class="relative py-5">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-gray-400 dark:border-gray-500"></div>
       </div>
-    </fieldset>
+    </div>
+
+    <div class="text-center">
+      <p class="text-gray-400 dark:text-gray-300 text-sm mb-3">Akkauntingiz bormi?</p>
+      <a
+        href="./login.html"
+        class="relative overflow-hidden bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500 text-white rounded-xl w-full py-3 font-bold shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group flex items-center justify-center"
+      >
+        <span class="relative z-10 flex items-center justify-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+          Tizimga Kirish
+        </span>
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </a>
+    </div>
+  </div>
+</fieldset>
+
   </body>
 </html>

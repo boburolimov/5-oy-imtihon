@@ -1,8 +1,18 @@
 import { checkAuth } from "./check-auth.js";
 import { deleteElementLocal, editElementLocal } from "./crud.js";
 import { changeLocalData, localData } from "./local-data.js";
-import { getAll, getById2, editElement } from "./request.js";
+import { getAll, getById2, editElement, addElement } from "./request.js";
+
 import { pagination, ui } from "./ui.js";
+
+const channel1 = new BroadcastChannel("channel_1")
+
+channel1.onmessage = (evt) => {
+  if(evt.data.action === "redirect") {
+    window.location.href = evt.data.address
+  }
+  
+}
 
 const limit = 12;
 let skip = 0;
@@ -24,6 +34,14 @@ const elOfflinePage = document.getElementById("offlinePage");
 const elFilterTypeSelect = document.getElementById("filterTypeSelect");
 const elFilterVallueSelect = document.getElementById("filterValueSelect");
 const elSearchInput = document.getElementById("searchInput");
+const elAddCar = document.getElementById("addCar");
+const elCloseEditModal = document.getElementById("closeEditModal");
+const eldark = document.getElementById("dark");
+const sunIcon = document.getElementById("sunIcon");
+const moonIcon = document.getElementById("moonIcon");
+const searchInput = document.getElementById('searchInput');
+const container = document.getElementById('container');
+const footer = document.querySelector('footer');
 
 let backendData = null;
 let worker = new Worker("./worker.js");
@@ -31,6 +49,14 @@ let worker = new Worker("./worker.js");
 let filterKey = null;
 let filterValue = null;
 let editedElementId = null;
+
+function warning () {
+  window.location.href = "/pages/the.html"
+  channel1.postMessage({action: "redirect", address: "/pages/the.html"})
+}
+
+
+
 
 window.addEventListener("DOMContentLoaded", () => {
   if (window.navigator.onLine === false) {
@@ -143,7 +169,7 @@ worker.addEventListener("message", (evt) => {
     } else {
       const eltext = document.createElement("h1");
       eltext.textContent = "Afsuski bunday mashina yoq";
-      eltext.className = "text-center text-[50px] col-span-3 mt-[100px]";
+  eltext.className = "text-center text-[50px] col-span-3 mt-[100px] text-gray-900 dark:text-white";
 
       const img = document.createElement("img");
       img.src = "img/no-data.png";
@@ -152,6 +178,7 @@ worker.addEventListener("message", (evt) => {
 
       elContainer.appendChild(eltext);
       elContainer.appendChild(img);
+      document.getElementById("pagination").innerHTML = "";
     }
   }
 });
@@ -283,7 +310,7 @@ elPagination.addEventListener("click", (evt) => {
 
     getAll(`?limit=${limit}&skip=${skip}`)
       .then((res) => {
-        backendData.res;
+        backendData = res;
         elContainer.innerHTML = "";
         ui(res.data);
         pagination(res.total, res.limit, res.skip);
@@ -300,10 +327,130 @@ elPagination.addEventListener("click", (evt) => {
   }
 });
 
-const elCloseEditModal = document.getElementById("closeEditModal");
+elAddCar.addEventListener("click", () => {
+  if (!checkAuth()) {
+    elAuthModal.showModal();
+
+    elAuthCancel.addEventListener("click", () => {
+      elAuthModal.close();
+    });
+
+    elAuthLogin.addEventListener("click", () => {
+      window.location.href = "/pages/login.html";
+    });
+
+    return;
+  }
+
+  elEditForm.reset();
+  elEditModal.showModal();
+  editedElementId = null;
+});
+
+elEditForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+
+  if (!editedElementId) {
+    const submitBtn = elEditForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Saqlanmoqda...";
+
+    const formData = new FormData(elEditForm);
+    const newCar = {};
+    formData.forEach((value, key) => {
+      newCar[key] = value;
+    });
+
+    if (!checkAuth()) {
+      elEditModal.close();
+      elAuthModal.showModal();
+      elAuthCancel.addEventListener("click", () => {
+        elAuthModal.close();
+      });
+      elAuthLogin.addEventListener("click", () => {
+        window.location.href = "/pages/login.html";
+      });
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Saqlash";
+      return;
+    }
+
+    addElement(newCar)
+      .then((res) => {
+        backendData.data.unshift(res);
+        changeLocalData(backendData.data);
+        elContainer.innerHTML = "";
+        ui(backendData.data);
+      })
+      .catch((err) => {
+        console.log("Qoshishda xato:", err);
+      })
+      .finally(() => {
+        elEditModal.close();
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Saqlash";
+      });
+  }
+});
 
 elCloseEditModal.addEventListener("click", () => {
   elEditModal.close();
 });
 
+if (localStorage.getItem("theme") === "dark") {
+  document.documentElement.classList.add("dark");
+  sunIcon.classList.remove("hidden");
+  moonIcon.classList.add("hidden");
+  sunIcon.style.opacity = "1";
+  sunIcon.style.transform = "scale(1)";
+  moonIcon.style.opacity = "0";
+  moonIcon.style.transform = "scale(0.75)";
+} else {
+  document.documentElement.classList.remove("dark");
+  sunIcon.classList.add("hidden");
+  moonIcon.classList.remove("hidden");
+  sunIcon.style.opacity = "0";
+  sunIcon.style.transform = "scale(0.75)";
+  moonIcon.style.opacity = "1";
+  moonIcon.style.transform = "scale(1)";
+}
+
+eldark.addEventListener("click", () => {
+  document.documentElement.classList.toggle("dark");
+  const dark = document.documentElement.classList.contains("dark");
+
+  sunIcon.classList.toggle("hidden", !dark);
+  moonIcon.classList.toggle("hidden", dark);
+
+  sunIcon.style.opacity = dark ? "1" : "0";
+  sunIcon.style.transform = dark ? "scale(1)" : "scale(0.75)";
+  moonIcon.style.opacity = dark ? "0" : "1";
+  moonIcon.style.transform = dark ? "scale(0.75)" : "scale(1)";
+
+  localStorage.setItem("theme", dark ? "dark" : "light");
+});
+
+
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
+  let hasResults = false;
+
+  const cards = container.querySelectorAll('.card');
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (text.includes(query)) {
+      card.style.display = '';
+      hasResults = true;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  if (!hasResults) {
+    footer.style.display = 'none';
+  } else {
+    footer.style.display = '';
+  }
+});
 
